@@ -1,0 +1,6 @@
+今后，涉及到其他代码相关的东西时，
+你就可以在Codefield文件夹下组织了，
+比如再学一门C++语言时，建一个CODE_Cpp文件夹；
+玩leetcode刷算法的时候，建一个Leetcode文件夹；
+从github克隆别人的项目时，建一个Github文件夹；
+自己做项目时，建个Projects文件夹……

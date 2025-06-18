@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芜湖</title>
+
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: '186af57ffc522880c05747ccd0fa93c5',
+        }
+    </script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=c9a99c0fe85b87c0a023b871978d00dc">
+    </script>
+    <style>
+        html,
+        body,
+        #container {
+            width: 1200px;
+            height: 700px;
+            background-color: skyblue;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="showTraffic()">显示交通信息</button>
+    <button onclick="hideTraffic()">隐藏交通信息</button>
+    <div id="container"></div>
+    <script>
+        var map = new AMap.Map('container', {
+            zoom: 14,
+            viewMode: '3D',
+            center: [116.417901, 39.893797]
+        })
+
+        var traffic = new AMap.TileLayer.Traffic({
+            autoRefresh: true,
+            interval: 180,
+        })
+        function showTraffic() {
+            map.add(traffic)
+        }
+        function hideTraffic() {
+            map.remove(traffic)
+        }
+
+        AMap.plugin(
+            [
+                'AMap.ToolBar',
+                'AMap.Scale',
+                'AMap.MapType',
+                'AMap.Geolocation',
+                'AMap.ControlBar'
+            ],
+            function () {
+                //ToolBar(工具)
+                //5.2 添加控件
+                //ToolBar(工具条)：继承了缩放平移定位
+                map.addControl(new AMap.ToolBar());
+                map.addControl(new AMap.Scale());
+                map.addControl(new AMap.MapType());
+                map.addControl(new AMap.Geolocation());
+                map.addControl(new AMap.ControlBar());
+            });
+
+        map.on('click', function (event) {
+            console.log(event)
+            console.log(`经度: ${event.lnglat.lng},纬度: ${event.lnglat.lat}`)
+            //字符串用的是`符号 也就是esc按键下面的符号 
+        })
+
+        //添加点 创建marker对象
+        var marker = new AMap.Marker({
+            position: new AMap.LngLat(116, 39)
+        })
+        //添加到地图
+        map.add(marker)
+
+        // 折线的节点坐标数组，每个元素为 AMap.LngLat 对象
+        var path = [
+            new AMap.LngLat(116.368904, 39.913423),
+            new AMap.LngLat(116.382122, 39.901176),
+            new AMap.LngLat(116.387271, 39.912501),
+            new AMap.LngLat(116.398258, 39.904600)
+        ]
+        var polyline = new AMap.Polyline({
+            path: path,
+            fillColor: '#fff',// 多边形填充颜色
+            borderWeight: 2, // 线条宽度，默认为 1
+            strokeColor: 'red', // 线条颜色
+            lineJoin: 'round' // 折线拐点连接处样式
+        });
+        map.add(polyline);
+
+        // 引入多边形编辑器插件
+        map.plugin(["AMap.PolyEditor"], function () {
+            // 实例化多边形编辑器，传入地图实例和要进行编辑的多边形实例
+            polylineEditor = new AMap.PolyEditor(map, polyline);
+            // 开启编辑模式
+            polylineEditor.open();
+        });
+
+        //圆形
+        var circle = new AMap.Circle({
+            center: new AMap.LngLat(116.39, 39.9),
+            radius: 1000,
+            fillColor: 'red',
+            stokeColor: '#fff',
+            stokeWeight: 2,
+        })
+        // map.add(circle);
+        //画矩形
+        var southWest = new AMap.LngLat(116.356449, 39.859008)
+        var northEast = new AMap.LngLat(116.417901, 39.893797)
+        var bounds = new AMap.Bounds(southWest, northEast)
+        var rectangle = new AMap.Rectangle({
+            bounds: bounds,
+            strokeColor: 'red',
+            strokeWeight: 6,
+            strokeOpacity: 0.5,
+            strokeDasharray: [30, 10],
+            // strokeStyle还⽀持 solid
+            strokeStyle: 'dashed',
+            fillColor: 'blue',
+            fillOpacity: 0.5,
+            cursor: 'pointer',
+            zIndex: 50,
+        })
+        map.add(rectangle)
+
+        //地图覆盖物-两点推拽测距
+        var m1 = new AMap.Marker({
+            map: map,
+            draggable: true,
+            position: new AMap.LngLat(114.30,30.60),
+        })
+        var m2 = new AMap.Marker({
+            map: map,
+            draggable: true,
+            position: new AMap.LngLat(112.93, 28.23),
+        })
+        //↑创建2个点
+        map.setFitView()
+        //准备一条线
+        var line = new AMap.Polyline({
+            strokeColor: '$80d8ff',
+            isOutline: true,
+            outerlineColor: 'white',
+        })
+        line.setMap(map)
+
+        //准备一个文本
+        var text = new AMap.Text({
+            text: '',
+            style: {
+                'background-color': '#29b6f6',
+                'border-color': '#elf5fe',
+                'font-size': '16px',
+            },
+        })
+        text.setMap(map)
+
+        //计算
+        function compute() {
+            var p1 = m1.getPosition()
+            var p2 = m2.getPosition()
+
+            // 将text⽂本显示在两个经纬度的中间
+            var textPos = p1.divideBy(2).add(p2.divideBy(2)) //(p1+p2)/2
+            var dist = Math.round(p1.distance(p2))
+            var path = [p1, p2]
+            line.setPath(path) // 绘制线段
+            text.setText('距离为' + dist + '⽶')
+            text.setPosition(textPos)
+        }
+        compute()
+        m1.on('dragging', compute)
+        m2.on('dragging', compute)
+
+    </script>
+</body>
+
+</html>

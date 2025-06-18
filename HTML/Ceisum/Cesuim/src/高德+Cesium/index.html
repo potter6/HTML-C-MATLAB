@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceisum&GaoDe</title>
+    <!--Cesium 的初始-->
+    <!-- <script src="../libs/Cesium/Cesium.js"></script>
+    <link href="../libs/Cesium/Widgets/widgets.css" rel="stylesheet"> -->
+    <!-- <script src="/Cesuim/libs/Cesium/Cesium.js"></script>
+    <link href="/Cesuim/libs/Cesium/Widgets/widgets.css" rel="stylesheet"> -->
+    <script src="/Cesuim/libs/Cesium/Cesium.js"></script>
+    <link href="/Cesuim/libs/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+    <!--高德地图 的初始-->
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: '186af57ffc522880c05747ccd0fa93c5',
+        }
+    </script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=c9a99c0fe85b87c0a023b871978d00dc&plugin=AMap.MouseTool"></script>
+    <!--这里就可以将高德UI的卡片插入到界面当中-->
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <!--plugin后面引入MouseTool-->
+    <link href="css/index.css" rel="stylesheet">
+    <!--css界面布局-->
+</head>
+
+<body>
+    <!-- <button onclick="begin()">开始</button>
+    <button onclick="end()">结束</button>
+    <button onclick="jisuan()">计算</button>
+    <textarea id='textiutput'>此处输入</textarea>
+    <label id='output'>结果</label> -->
+
+    <!--===================Cesium地球窗口===================-->
+    <div id="cesiumContainer"></div>
+    <!-- <script src="js/Cesium.js"></script> -->
+    <script src="js/Cesium.js"></script>
+    <!--===================Cesium地球窗口===================-->
+
+    <!--====================高德地图窗口====================-->
+    <div id="GaoDecontainer"></div>
+    <div class="input-card" style="width: auto;margin-right: auto;">
+        <div class="input-item">
+            <input type="radio" name='func' checked="" value='rule'><span class="input-text">距离测量</span>
+            <input type="radio" name='func' value='measureArea'><span class="input-text">面积测量</span>
+            <input id="close" type="button" class="btn" value="关闭" />
+        </div>
+    </div>
+    <script src="js/GaoDe.js"></script>
+</body>
+
+</html>

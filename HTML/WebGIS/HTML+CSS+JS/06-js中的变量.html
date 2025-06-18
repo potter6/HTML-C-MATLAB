@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js中的变量</title>
+    <style>
+        h1{color: blue;}
+        h2{color: red;}
+        h3{color:green}
+    </style>
+</head>
+<body>
+    <h1>好耶1<h1>
+    <h2>好耶2</h2>
+    <h3>好耶3</h3>
+    <P><h1>换行的好耶1</h1></P>
+    <!-- 立体像对：从不同摄站提取的具有重叠影像的一堆像片 -->
+    <!--4D 产品是指
+            DEM 数字高程模型
+            DOM 数字正射影像
+            DLG 数字线划地图
+            DRG 数字栅格地图-->
+    <!-- 1、 中心投影的像片 转化 正射投影的地形图
+         3、 生理视差
+         4、 相对定向完成的标志是 模型店在统一的辅助坐标系中坐标U、V、W的求出
+        摄影测量 是对研究的对象进行摄影，根据所获得的构像信息，从几何方面和物理方面加以分析研究
+         ，从而对所摄像的对象本质提供各种资料的一门学科
+        -->            
+    <script>        
+        //声明变量
+        var i=1;
+        var str="好耶";
+        console.log(i);
+        console.log(str);
+        i=i+1;
+        console.log(i);
+        var pi=Math.PI;
+        console.log(pi);
+
+        var arr=[1,2,3];
+        console.log(arr);
+        for(i=0;i<arr.length;i++)
+        {
+            console.log(arr[i]);
+        }
+        
+        // var name=prompt("输入");
+        // alert(name+"hello");
+        // console.log("控制台的："+name);
+
+        // 声明函数
+        function getSum(){
+            var sumNum = 0;// 准备一个变量，保存数字和
+            for (var i = 1; i <= 100; i++) {
+                sumNum += i;// 把每个数值 都累加 到变量中
+            }
+            alert(sumNum);
+        }
+        // 调用函数
+        getSum()
+
+
+        function add(x,y){            
+            return x+y
+        }        
+        console.log(add(1,2))
+        console.log(add(100,200))        
+        
+    </script>        
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图控件</title>
+    <!-- 一.引入资源 -->
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: '186af57ffc522880c05747ccd0fa93c5',
+        }
+    </script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=c9a99c0fe85b87c0a023b871978d00dc">
+    </script>
+    <!-- 三.设置地图的样式 -->
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 二.创建地图的容器 -->
+    <div id="container"></div>
+    <!-- 四.加载地图 -->
+    <script type="text/javascript">
+        //地图
+        var map = new AMap.Map('container', {
+            // center:[114.30,30.60],//设置地图中心点的经纬度
+            // center:[113.008943,28.06775],//CSUST的经纬度
+            center: [114.03, 29.55],//经纬度
+            zoom: 15,  //地图的缩放比例3~20
+            viewMode: '3D',//3D视图
+            // pitch:45,//视角的倾斜角度   
+        });
+
+        //监听地图的点击事件
+        map.on('click', function (event) {
+            console.log(event);
+            // console.log('经度: ${event.lnglat.lng},纬度: ${event.lnglat.lat}')            
+            console.log(event.lnglat.lng)//经度
+            console.log(event.lnglat.lat)//纬度
+        })
+
+        //5.1 使用/安装plugin
+        AMap.plugin(
+            [
+                'AMap.ToolBar',
+                'AMap.Scale',
+                'AMap.MapType',
+                'AMap.Geolocation',
+                'AMap.ControlBar'
+            ],
+            function () {
+                //ToolBar(工具)
+                //5.2 添加控件
+                //ToolBar(工具条)：继承了缩放平移定位
+                map.addControl(new AMap.ToolBar());
+                map.addControl(new AMap.Scale());
+                map.addControl(new AMap.MapType());
+                map.addControl(new AMap.Geolocation());
+                map.addControl(new AMap.ControlBar());
+            });
+
+
+        // 事件功能与信息窗体
+        var infoWindow = new AMap.InfoWindow({
+            isCustom: true,
+            content: '<div>信息窗体</div>',
+            offset: new AMap.Pixel(16, -45)
+        })
+        var onMarkerClick = function (e) {
+            infoWindow.open(map, e.target.getPosition());
+        }
+        var marker = new AMap.Marker({
+            // position:[113.008943,28.06775]
+            position: [114.03, 29.55]
+        })
+        map.add(marker);
+        marker.on('click', onMarkerClick);
+
+
+        map.on('click', function (e) {
+            console.log(e)
+            //添加點
+            //1、創建一個點對象
+            var marker = new AMap.Marker({
+                position: e.lnglat,
+            })
+            //2、添加到地圖
+            map.add(marker)
+        })
+
+    </script>
+
+
+</body>
+
+</html>

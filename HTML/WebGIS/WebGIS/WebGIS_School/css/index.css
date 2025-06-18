@@ -1,0 +1,27 @@
+/* // 使用类名选择器来指定样式 */
+
+.data-info {
+    padding: 5px;
+    /* 内边距 */
+    width: 150px;
+    /* 宽度, 不指定高度 height 就会随着内容的高度变换 */
+    background-color: #fff;
+    /* 内边距 */
+    color: #333;
+    /* 字体颜色 */
+    font-size: 13px;
+    /* 字体大小 */
+    border-radius: 5px;
+    /* 给这个盒子四周加上圆角 */
+    box-shadow: 0 5px 5px rgb(0 0 0 / 12%);
+    /* 给盒子加上一点点阴影 */
+}
+
+.data-detail-info {
+    position: absolute;
+    /* 绝对定位属性, 如果父盒子(包裹当前标签的外标签)没有设置 relative或者absolute, 那么参照物就是浏览器页面边缘 */
+    top: 60px;
+    /* 距离参照物上边边缘 60 个像素 */
+    left: 30px;
+    /* 距离参照物左边边缘 30 个像素 */
+}

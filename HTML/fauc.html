@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesium</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.85/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.85/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/echarts/5.4.2/echarts.min.js"></script>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="cesiumContainer"></div> -->
+    <div id="main" style="width: 400px;height: 400px;border: aqua 3px solid"></div>
+    <button type="button"></button>
+    <script type="text/javascript">
+        //初始化Echarts实例
+        var myEcharts = echarts.init(document.getElementById('main'))
+            //定义变量
+        var option = {
+            //图例
+            title: {
+                text: '第一张图'
+            },
+            //图例组件
+            legend: {
+                data: ['销量'],
+                textStyle: {
+                    color: 'blue'
+                }
+
+            },
+            xAxis: {
+                data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                //柱状图
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+        //设置配置
+        myEcharts.setOption(option);
+    </script>
+    <script>
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2YTIyZmYwNC1lOWZlLTRmN2ItYTA0YS1jMTAxZWIyOGY3ZWEiLCJpZCI6MTIwNzU1LCJpYXQiOjE2NzMyNjMzMDl9.Jkr5hkEYBr4y5Wr9PrbJ1VQIj1eSiMAesFeT6KUrf28";
+        // 创建Cesium Viewer对象
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            terrainProvider: Cesium.createWorldTerrain(),
+            imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+                url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+            }), //底图数据提供
+        });
+
+        viewer.camera.flyTo({
+            desination: Cesium.Cartesian3.fromDegrees(112.9448, 28.1708, 1200),
+            orientation: {
+                heading: Cesium.Math.toRadians(0.0),
+                pitch: Cesium.Math.toRadians(-15.0),
+            }
+        })
+
+        // Query the terrain height of two Cartographic positions
+        var terrainProvider = Cesium.createWorldTerrain();
+        var positions = [
+            Cesium.Cartographic.fromDegrees(86.925145, 27.988257),
+            Cesium.Cartographic.fromDegrees(87.0, 28.0)
+        ];
+        var promise = Cesium.sampleTerrain(terrainProvider, 11, positions);
+        Cesium.when(promise, function(updatedPositions) {
+            // positions[0].height and positions[1].height have been updated.
+            // updatedPositions is just a reference to positions.
+        });
+
+        // // 设置初始视图位置
+        // viewer.camera.setView({
+        //     destination: Cesium.Cartesian3.fromDegrees(
+        //         0, 0, 10000000 // 设置地球初始视图位置和高度
+        //     ),
+        //     orientation: {
+        //         heading: Cesium.Math.toRadians(0),
+        //         pitch: Cesium.Math.toRadians(-90),
+        //         roll: Cesium.Math.toRadians(0),
+        //     },
+        // });
+
+        // var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+        // var startPoint;
+        // var endPoint;
+
+        // handler.setInputAction(function(click) {
+        //     if (!startPoint) {
+        //         startPoint = viewer.scene.pickPosition(click.position);
+        //     } else if (!endPoint) {
+        //         endPoint = viewer.scene.pickPosition(click.position);
+        //         handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        //         // 执行绘制高程纵断面图的方法
+        //         drawElevationProfile(startPoint, endPoint);
+        //     }
+        // }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        // function drawElevationProfile(startPoint, endPoint) {
+        //     // 获取两点之间的高程数据
+        //     var terrainProvider = new Cesium.CesiumTerrainProvider({
+        //         url: Cesium.IonResource.fromAssetId(1), // 使用默认的Cesium高程数据源
+        //     });
+
+        //     var positions = [
+        //         startPoint,
+        //         endPoint,
+        //     ];
+
+        //     // 查询高程数据
+        //     Cesium.sampleTerrainMostDetailed(terrainProvider, positions)
+        //         .then(function(updatedPositions) {
+        //             var canvas = document.createElement("canvas");
+        //             canvas.width = 800;
+        //             canvas.height = 300;
+        //             var context = canvas.getContext("2d");
+
+        //             var elevationData = [];
+        //             var maxElevation = Number;
+        //             for (var i = 0; i < updatedPositions.length; i++) {
+        //                 var elevation = updatedPositions[i].height;
+        //                 elevationData.push(elevation);
+        //                 if (elevation > maxElevation) {
+        //                     maxElevation = elevation;
+        //                 }
+        //             }
+
+        //             // 归一化高程数据
+        //             for (var i = 0; i < elevationData.length; i++) {
+        //                 elevationData[i] /= maxElevation;
+        //                 elevationData[i] *= canvas.height;
+        //             }
+
+        //             // 绘制纵断面图
+        //             context.beginPath();
+        //             context.moveTo(0, canvas.height - elevationData[0]);
+        //             for (var i = 1; i < elevationData.length; i++) {
+        //                 context.lineTo(i * (canvas.width / elevationData.length), canvas.height - elevationData[i]);
+        //             }
+        //             context.strokeStyle = "red";
+        //             context.lineWidth = 2;
+        //             context.stroke();
+
+        //             // 将纵断面图添加到页面中
+        //             document.body.appendChild(canvas);
+        //         });
+        // }
+    </script>
+
+</body>
+
+</html>

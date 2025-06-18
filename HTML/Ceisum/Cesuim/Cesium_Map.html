@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesium地球</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.85/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.85/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            zoom: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script>
+        var esri = new Cesium.ArcGisMapServerImageryProvider({
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+        })
+
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2MmY5NGYxNy1lNzA0LTRhODQtYjlhNy0wNTdmNDUzN2FlMGEiLCJpZCI6MTIwNzU1LCJpYXQiOjE3MTA2NDMxMjh9.5YdXsEMd2CLNn1U920vXi0ZxvG2EnPk0zcbqjd_MutU";
+        const viewer = new Cesium.Viewer(cesiumContainer, {
+            baseLayerPicker: true, //底图组件，选择三维数字地球的地图（imagery and teerrain）
+            imageryProvider: esri,
+            animation: false, //动画小组件
+            timeline: false,
+            fullscreenButton: true,
+            vrButton: true,
+            terrainProvider: new Cesium.CesiumTerrainProvider({
+                url: Cesium.IonResource.fromAssetId(1),
+                requestVertexNormals: true,
+                requestWaterMask: true //水面流动的效果
+            }),
+        });
+
+        //导入DEM数据
+        const tileset = viewer.scene.primitives.add(
+            new Cesium.Cesium3DTileset({
+                url: Cesium.IonResource.fromAssetId(75343),
+            })
+        );
+
+        //去掉Cesium的底部水印 隐藏logo
+        viewer._cesiumWidget._creditContainer.style.display = "none";
+
+        //CesiumInspector
+        viewer.extend(Cesium.viewerCesiumInspectorMixin);
+
+        //指定Home按钮指向的区域位置
+        // Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(113.008943, 28.06775, 113.008943, 28.06775);
+    </script>
+
+</body>
+
+</html>

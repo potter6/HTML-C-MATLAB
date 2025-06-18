@@ -1,0 +1,22 @@
+mcc -W 'dotnet:drew,Class1,4.0,private' -T link:lib -d 'D:\Code\Matlab\DLL productor\test1\drew\for_testing' -v 'class{Class1:D:\Code\Matlab\DLL productor\test1\drew.m}' 
+Compiler version: 6.1 (R2015b)
+
+Dependency analysis by REQUIREMENTS.
+
+Begin validation of MEX files: Sat Oct 29 20:01:04 2022
+End validation of MEX files: Sat Oct 29 20:01:04 2022
+[警告: Adding path "D:\Code\Matlab\DLL productor\test1" to Compiler path
+instance.] 
+[] 
+Parsing file "D:\Code\Matlab\DLL productor\test1\drew.m"
+	(Referenced from: "Compiler Command Line").
+Deleting 0 temporary MEX authorization files.
+Generating file "D:\Code\Matlab\DLL productor\test1\drew\for_testing\Class1Native.cs".
+Generating file "D:\Code\Matlab\DLL productor\test1\drew\for_testing\Class1.cs".
+Generating file "D:\Code\Matlab\DLL productor\test1\drew\for_testing\readme.txt".
+Executing command: C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /nologo /optimize /doc:"D:\Code\Matlab\DLL productor\test1\drew\for_testing\drew.xml" /t:library /r:"D:\Productivity Tools\Matlab R2015b\toolbox\dotnetbuilder\bin\win32\v2.0\MWArray.dll" /resource:"D:\Code\Matlab\DLL productor\test1\drew\for_testing\drew.ctf" /out:"D:\Code\Matlab\DLL productor\test1\drew\for_testing\drew.dll" "D:\Code\Matlab\DLL productor\test1\drew\for_testing\Class1.cs"Executing command: C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /nologo /optimize /doc:"D:\Code\Matlab\DLL productor\test1\drew\for_testing\drewNative.xml" /t:library /r:"D:\Productivity Tools\Matlab R2015b\toolbox\dotnetbuilder\bin\win32\v2.0\MWArray.dll" /resource:"D:\Code\Matlab\DLL productor\test1\drew\for_testing\drew.ctf" /out:"D:\Code\Matlab\DLL productor\test1\drew\for_testing\drewNative.dll" "D:\Code\Matlab\DLL productor\test1\drew\for_testing\Class1Native.cs"
+正在打包...
+Creating the bundle...
+Web based installer created at D:\Code\Matlab\DLL productor\test1\drew\for_redistribution\MyAppInstaller_web.exe.
+Packaging complete.
+Elapsed packaging time was: 27 seconds.

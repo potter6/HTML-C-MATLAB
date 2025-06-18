@@ -1,0 +1,4 @@
+﻿  16.cpp
+D:\包\学习笔记\16\16\16.cpp(278,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+D:\包\学习笔记\16\16\16.cpp(278,21): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+  16.vcxproj -> D:\包\学习笔记\16\Debug\16.exe

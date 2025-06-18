@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图显示</title>
+    <!-- 一.引入资源 -->
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode:'186af57ffc522880c05747ccd0fa93c5',
+        }
+    </script>
+    <script 
+        type="text/javascript" 
+        src="https://webapi.amap.com/maps?v=2.0&key=c9a99c0fe85b87c0a023b871978d00dc">
+    </script>  
+    <!-- 三.设置地图的样式 -->
+    <style>
+        #container{
+            width: 1200px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!--二.创建地图的容器-->
+    <!--div #container-->
+    <div id="container"></div>
+    <!--四.加载地图-->
+    <!--法1 -->
+    <!-- <script type="text/javascript">
+        window.init = function(){
+            var map = new AMap.Map('container', {
+                center:[113.000923,28.125807],
+                zoom:11
+            });
+        }
+    </script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=c9a99c0fe85b87c0a023b871978d00dc&callback=init"></script> -->
+    
+    <!--法2 -->
+    <!-- <script type="text/javascript">
+        var map = new AMap.Map('container', {
+           center:[113.000923,28.125807],
+           zoom:11
+        });
+    </script> -->
+    
+    <script type="text/javascript">
+        var map = new AMap.Map('container' ,{
+        });
+    </script>
+    
+
+</body>
+</html>
